@@ -4,8 +4,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 import pandas as pd
 
-service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service)
 from time import sleep
 Moedas = []
 Rodar = True
@@ -13,16 +11,18 @@ Rodar = True
 print("BEM VINDO!")
 def Menu():
      print("----MENU----")
-     print("1- Para ver contaçao do dolar, e Real")
+     print("1- Para ver contaçao Das 8 Principais moedas ")
      print("2- Para Sair")
      Resposta = input("Digite aqui sua opçao: ")
      if Resposta == "1":
           Valores()
      elif Resposta == "2":
-          driver.quit()
+        print("Encerrado")
 
 def Valores():
     try:
+          service = Service(ChromeDriverManager().install())
+          driver = webdriver.Chrome(service=service)
           Site = driver.get("https://investidor10.com.br/moedas/")
           sleep(2)
           USD = driver.find_element(By.CSS_SELECTOR, ".points").text
@@ -43,7 +43,8 @@ def Valores():
           Moedas.append(TRY)
           CNY = driver.find_element(By.XPATH, '//*[@id="indices-grid"]/div[13]/a/div[2]/p[2]/strong').text
           Moedas.append(CNY)
-          
+     
+          driver.quit()
     except:
          print("Erro! Verifique sua internet.")
     tb = {
